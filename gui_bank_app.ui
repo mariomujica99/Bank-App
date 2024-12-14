@@ -319,7 +319,7 @@
       <x>40</x>
       <y>520</y>
       <width>113</width>
-      <height>32</height>
+      <height>41</height>
      </rect>
     </property>
     <property name="font">
@@ -332,13 +332,13 @@
      <string>Enter</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="button_exit">
+   <widget class="QPushButton" name="button_logout">
     <property name="geometry">
      <rect>
       <x>240</x>
       <y>520</y>
       <width>113</width>
-      <height>32</height>
+      <height>41</height>
      </rect>
     </property>
     <property name="font">
@@ -348,7 +348,7 @@
      </font>
     </property>
     <property name="text">
-     <string>Exit</string>
+     <string>Logout</string>
     </property>
    </widget>
    <widget class="QLabel" name="label_balance_text">
