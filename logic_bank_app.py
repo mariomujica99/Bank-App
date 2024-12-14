@@ -4,6 +4,10 @@ from gui_bank_app import *
 
 
 def get_user_info():
+    '''
+    Method to get user information from csv file.
+    :return: lists of usernames, PINs, and balances.
+    '''
     bank_users = open('bank_users.csv', 'r')
     bank_users = csv.DictReader(bank_users)
     usernames = []
@@ -18,9 +22,11 @@ def get_user_info():
 
 class Logic(QMainWindow, Ui_MainWindow):
     def __init__(self):
+        '''
+        Method to set default instance variables.
+        '''
         super().__init__()
         self.setupUi(self)
-
         self.input_username.setFocus()
         self.button_sign_in.clicked.connect(lambda: self.sign_in())
         self.button_enter.clicked.connect(lambda: self.validate_amount())
@@ -43,6 +49,9 @@ class Logic(QMainWindow, Ui_MainWindow):
         self.button_logout.setVisible(False)
 
     def sign_in(self):
+        '''
+        Method to test the success of loging-in to an account.
+        '''
         usernames, pins, balances = get_user_info()
         username = self.input_username.text().strip()
         pin = self.input_PIN.text().strip()
@@ -59,9 +68,6 @@ class Logic(QMainWindow, Ui_MainWindow):
                     self.radio_withdraw.setVisible(True)
                     self.radio_deposit.setVisible(True)
                     self.radio_balance.setVisible(True)
-
-                    #if self.radio_withdraw.isChecked():
-
                 else:
                     self.label_sign_in_status.setText('Sign In Failed')
                     self.label_sign_in_text.setText('Your username or password is incorrect.\nPlease try again.')
@@ -76,11 +82,16 @@ class Logic(QMainWindow, Ui_MainWindow):
             self.label_sign_in_text.setText('Your username or password is incorrect.\nPlease try again.')
 
     def validate_amount(self):
+        '''
+        Method to assess the amount input.
+        If valid input is put in,
+        radio buttons are made visible.
+        '''
         amount = self.input_amount.text().strip()
         try:
             amount = float(self.input_amount.text().strip())
             if amount < 0:
-                self.label_transaction_text.setText('Invalid amount.\nPlease try again.')
+                self.label_transaction_text.setText('Invalid amount. Please try again.')
             elif self.radio_withdraw.isChecked():
                 self.withdraw()
             elif self.radio_deposit.isChecked():
@@ -88,48 +99,63 @@ class Logic(QMainWindow, Ui_MainWindow):
             elif self.radio_balance().isChecked():
                 self.balance()
         except ValueError:
-            self.label_transaction_text.setText('Invalid amount.\nPlease try again.')
+            self.label_transaction_text.setText('Invalid amount. Please try again.')
         except OverflowError:
-            self.label_transaction_text.setText('Invalid amount.\nPlease try again.')
+            self.label_transaction_text.setText('Invalid amount. Please try again.')
 
     def amount_visible(self):
+        '''
+        Method to make input amount visible.
+        '''
         self.label_amount.setText('Amount')
         self.input_amount.setVisible(True)
         self.button_logout.setVisible(True)
 
     def radio_withdraw_or_deposit(self):
+        '''
+        Method to make the withdraw and deposit UI visible.
+        '''
         self.amount_visible()
         self.button_enter.setVisible(True)
 
     def radio_bal_inq(self):
+        '''
+        Method to make the balance UI visible.
+        '''
         self.balance()
         self.button_logout.setVisible(True)
 
     def withdraw(self):
+        '''
+        Method to withdraw money from a persons' account.
+        '''
         usernames, pins, balances = get_user_info()
         username = self.input_username.text().strip()
         index = usernames.index(username)
-
         amount = float(self.input_amount.text().strip())
-
         new_balance = balances[index] - amount
         self.label_transaction_text.setText(f'You have withdrawn ${amount:.2f}')
         self.label_balance_text.setText(f'Your balance is: {new_balance}')
         self.input_amount.clear()
 
     def deposit(self):
+        '''
+        Method to deposit money into a persons' account.
+        '''
         usernames, pins, balances = get_user_info()
         username = self.input_username.text().strip()
         index = usernames.index(username)
         self.amount_visible()
         amount = float(self.input_amount.text().strip())
-
         new_balance = balances[index] + amount
         self.label_transaction_text.setText(f'You have deposited ${amount:.2f}')
         self.label_balance_text.setText(f'Your balance is: {new_balance}')
         self.input_amount.clear()
 
     def balance(self):
+        '''
+        Method for seeing a persons' balance.
+        '''
         usernames, pins, balances = get_user_info()
         username = self.input_username.text().strip()
         index = usernames.index(username)
@@ -140,6 +166,9 @@ class Logic(QMainWindow, Ui_MainWindow):
         self.button_logout.setVisible(True)
 
     def logout(self):
+        '''
+        Method for loging out of the account.
+        '''
         if self.group_transactions.checkedButton() is None:
             pass
         elif self.group_transactions.checkedButton() != 0:

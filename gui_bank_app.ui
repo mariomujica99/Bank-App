@@ -354,9 +354,9 @@
    <widget class="QLabel" name="label_balance_text">
     <property name="geometry">
      <rect>
-      <x>100</x>
+      <x>70</x>
       <y>470</y>
-      <width>201</width>
+      <width>271</width>
       <height>21</height>
      </rect>
     </property>
@@ -376,9 +376,9 @@
    <widget class="QLabel" name="label_transaction_text">
     <property name="geometry">
      <rect>
-      <x>100</x>
+      <x>70</x>
       <y>440</y>
-      <width>201</width>
+      <width>271</width>
       <height>21</height>
      </rect>
     </property>
